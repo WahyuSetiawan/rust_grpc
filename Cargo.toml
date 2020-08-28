@@ -13,10 +13,27 @@ name = "helloworld-client"
 path = "src/client.rs"
 
 [dependencies]
+async-stream = "*"
+bytes = "*"
+chrono = "*"
+console = "*"
+dotenv = "*"
+envfile = "*"
 futures = "0.3"
+futures-preview = {version = "*", default-features = false}
+http = "*"
+mysql = "*"
+# postgres = {version = "*", features = ["with-chrono"]}
 prost = "0.6.1"
+prost-derive = "*"
+prost-types = "*"
+serde = "*"
+serde_derive = "*"
+serde_json = "*"
 tokio = {version = "0.2.18", features = ["stream", "macros"]}
 tonic = {version = "0.2.0", features = ["tls"]}
+tower = "*"
+uuid = {version = "*", features = ["serde", "v4"]}
 
 [build-dependencies]
 tonic-build = "0.2.0"

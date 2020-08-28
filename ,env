@@ -1,1 +1,8 @@
 OUT_DIR=proto_build
+
+database=grpc
+port=3306
+database_server=localhost
+
+username=root
+password=
