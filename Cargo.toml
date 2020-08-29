@@ -5,6 +5,10 @@ name = "rust_grpc"
 version = "0.1.0"
 
 [[bin]] # Bin to run the HelloWorld gRPC server
+name = "main"
+path = "src/main.rs"
+
+[[bin]] # Bin to run the HelloWorld gRPC server
 name = "helloworld-server"
 path = "src/server.rs"
 

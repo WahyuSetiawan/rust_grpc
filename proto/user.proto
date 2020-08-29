@@ -51,5 +51,5 @@ message DeleteUserReply{
 }
 
 message Users{
-    repeated UserReply user = 1;
+    repeated UserReply users = 1;
 }

@@ -22,13 +22,13 @@ impl Crud for User {
 
         let UserRequest { id } = &request.into_inner();
 
-        let conn = establish_connection();
+        let mut conn = establish_connection();
 
-        let rows = conn
+        let rows: Vec<UserReply> = conn
             .as_mut()
             .query_map(
                 format!(
-                    "select id, first_name, last_name, date_of_birth from users where id = {}",
+                    "select id, first_name, last_name, date_of_birth from users where id = \'{}\'",
                     &id
                 ),
                 |(id, first_name, last_name, date_of_birth)| UserReply {
@@ -41,14 +41,69 @@ impl Crud for User {
             .unwrap();
 
 
-        let result = rows.get(0).unwrap();
+        let result = rows.get(0).unwrap().clone();
 
+        Ok(Response::new(result))
+    }
 
-        Ok(Response::new(UserReply {
-            id: "1".to_string(),
-            first_name: "alskdf".to_string(),
-            last_name: "2".to_string(),
-            date_of_birth: "123".to_string(),
+    async fn list_users(&self, request: Request<Empty>) -> Result<Response<Users>, Status> {
+        println!("Got a request {:#?}", &request);
+
+        let mut conn = establish_connection();
+
+        let rows: Vec<UserReply> = conn
+            .query_map(
+                "select id, first_name, last_name, date_of_birth from users ",
+                |(id, first_name, last_name, date_of_birth)| UserReply {
+                    id: id,
+                    first_name: first_name,
+                    last_name: last_name,
+                    date_of_birth: date_of_birth,
+                },
+            )
+            .unwrap();
+
+        Ok(Response::new(Users { users: rows }))
+    }
+
+    async fn create_user(
+        &self,
+        request: Request<CreateUserRequest>,
+    ) -> Result<Response<CreateUserReply>, Status> {
+        println!("Got a request {:#?}", &request);
+
+        Ok(Response::new(CreateUserReply {
+            message: "masih dalam pengerjaan".to_string(),
+        }))
+    }
+
+    async fn update_user(
+        &self,
+        request: Request<UpdateUserRequest>,
+    ) -> Result<Response<UpdateUserReply>, Status> {
+        println!("Got a request {:#?}", &request);
+
+        Ok(Response::new(UpdateUserReply {
+            message: "update user request dalam pengerjaan".to_string(),
+        }))
+    }
+
+    async fn delete_user(
+        &self,
+        request: Request<UserRequest>,
+    ) -> Result<Response<DeleteUserReply>, Status> {
+        println!("Got a request {:#?}", &request);
+
+        Ok(Response::new(DeleteUserReply {
+            message: "delete user masih dalam pengerjaan".to_string(),
+        }))
+    }
+
+    async fn delete(&self, request: Request<Empty>) -> Result<Response<DeleteUserReply>, Status> {
+        println!("Got a request {:#?}", &request);
+
+        Ok(Response::new(DeleteUserReply {
+            message: "delete all user no implementation".to_string(),
         }))
     }
 }
