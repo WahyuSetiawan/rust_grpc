@@ -1,6 +1,7 @@
 extern crate dotenv;
 // extern crate postgres;
 extern crate envfile;
+#[macro_use]
 extern crate mysql;
 
 extern crate chrono;

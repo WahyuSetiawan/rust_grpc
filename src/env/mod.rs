@@ -1,13 +1,12 @@
 use envfile::EnvFile;
 use std::env;
-use std::path::Path;
 
 pub struct EnvComponent {}
 
 impl EnvComponent {
     pub fn getData(&mut self) -> EnvFile {
-        let path = env::current_dir().unwrap();
-        let pathFileEnv = format!("{}\\.env", path.display());
+        let path: std::path::PathBuf = env::current_dir().unwrap();
+        let pathFileEnv: String = format!("{}\\.env", path.display());
 
         println!("{}", pathFileEnv);
 
